@@ -681,26 +681,21 @@
       e.preventDefault();
     }, { passive: false });
 
-    async function startGameWithAd() {
+    function startGameWithAd() {
         console.log("AD: Start requested");
     
-        try {
-            console.log("AD: Calling AdsGram...");
+        AdController.show()
+            .then((result) => {
+                console.log("AD RESULT:", result);
     
-            const result = await AdController.show();
-    
-            console.log("AD RESULT:", result);
-    
-            if (result.done) {
-                console.log("AD: Completed successfully");
-                initGame();
-            } else {
-                console.log("AD: Not completed");
-            }
-    
-        } catch (error) {
-            console.error("AD ERROR:", error);
-        }
+                if (result.done) {
+                    console.log("AD: Completed");
+                    initGame();
+                }
+            })
+            .catch((error) => {
+                console.error("AD ERROR:", error);
+            });
     }
 
     startBtn.addEventListener('click', startGameWithAd);
