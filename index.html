@@ -681,14 +681,19 @@
     }, { passive: false });
 
     async function startGameWithAd() {
+        console.log("AD: شروع درخواست تبلیغ");
+    
         try {
             const result = await AdController.show();
-
+    
+            console.log("AD RESULT:", result);
+    
             if (result.done) {
+                console.log("AD: تبلیغ کامل شد");
                 initGame();
             }
         } catch (error) {
-            console.log('AdsGram ad error:', error);
+            console.error("AD ERROR:", error);
         }
     }
 
