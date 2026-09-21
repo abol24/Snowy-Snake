@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Snowy Snake ❄️</title>
+  <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
@@ -418,6 +419,10 @@
     const restartBtn = document.getElementById('restartBtn');
     const pauseBtn = document.getElementById('pauseBtn');
 
+    const AdController = window.Adsgram.init({
+        blockId: "49134"
+    });
+
     highScoreEl.textContent = highScore;
 
     // Background snow
@@ -675,8 +680,20 @@
       e.preventDefault();
     }, { passive: false });
 
-    startBtn.addEventListener('click', initGame);
-    restartBtn.addEventListener('click', initGame);
+    async function startGameWithAd() {
+        try {
+            const result = await AdController.show();
+
+            if (result.done) {
+                initGame();
+            }
+        } catch (error) {
+            console.log('AdsGram ad error:', error);
+        }
+    }
+
+    startBtn.addEventListener('click', startGameWithAd);
+    restartBtn.addEventListener('click', startGameWithAd);
 
     pauseBtn.addEventListener('click', () => {
       if (!gameRunning) return;
