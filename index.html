@@ -422,6 +422,7 @@
     const AdController = window.Adsgram.init({
         blockId: "49134"
     });
+    console.log("AdsGram Controller:", AdController);
 
     highScoreEl.textContent = highScore;
 
@@ -648,7 +649,7 @@
       else if (key === 'ArrowDown' || key === 's' || key === 'S') setDirection('down');
       else if (key === 'ArrowLeft' || key === 'a' || key === 'A') setDirection('left');
       else if (key === 'ArrowRight' || key === 'd' || key === 'D') setDirection('right');
-      else if (key === ' ' && !gameRunning) initGame();
+      else if (key === ' ' && !gameRunning) startGameWithAd();
       e.preventDefault();
     });
 
@@ -681,17 +682,22 @@
     }, { passive: false });
 
     async function startGameWithAd() {
-        console.log("AD: شروع درخواست تبلیغ");
+        console.log("AD: Start requested");
     
         try {
+            console.log("AD: Calling AdsGram...");
+    
             const result = await AdController.show();
     
             console.log("AD RESULT:", result);
     
             if (result.done) {
-                console.log("AD: تبلیغ کامل شد");
+                console.log("AD: Completed successfully");
                 initGame();
+            } else {
+                console.log("AD: Not completed");
             }
+    
         } catch (error) {
             console.error("AD ERROR:", error);
         }
@@ -713,6 +719,14 @@
     });
 
     // Initial draw
+// Initial draw
+    snake = [
+        { x: 10, y: 10 },
+        { x: 9, y: 10 },
+        { x: 8, y: 10 }
+    ];
+    
+    placeFood();
     draw();
   </script>
 </body>
