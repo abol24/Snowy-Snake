@@ -684,20 +684,13 @@
     }, { passive: false });
 
     function startGameWithAd() {
-        console.log("AD: Start requested");
+        console.log("POPUNDER: Start requested");
     
-        AdController.show()
-            .then((result) => {
-                console.log("AD RESULT:", result);
+        // Popunder script قبلاً در <head> لود شده.
+        // این کلیک، تعامل واقعی کاربر با صفحه است.
+        console.log("POPUNDER: User clicked Start");
     
-                if (result.done) {
-                    console.log("AD: Completed");
-                    initGame();
-                }
-            })
-            .catch((error) => {
-                console.error("AD ERROR:", error);
-            });
+        initGame();
     }
 
     startBtn.addEventListener('click', startGameWithAd);
